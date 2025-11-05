@@ -19,16 +19,17 @@ enum Role {
   CUSTOMER
   SUPPLIER
   DRIVER
+  MANAGER
 }
 
 model User {
   id            String    @id
   name          String
   email         String
-  phoneNumber   Int
+  phoneNumber   Int       @unique
   emailVerified Boolean   @default(false)
   image         String?
-  role          Role      @default(PHARMACY)
+  role          Role      @default(CUSTOMER)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
