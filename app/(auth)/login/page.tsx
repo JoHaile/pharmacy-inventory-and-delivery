@@ -1,8 +1,17 @@
-import { GalleryVerticalEnd } from "lucide-react"
+import { GalleryVerticalEnd } from "lucide-react";
 
-import { LoginForm } from "@/components/login-form"
+import { LoginForm } from "@/components/login-form";
+import getServerSession from "@/utils/getServerSession";
+import { redirect } from "next/navigation";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await getServerSession();
+
+  if (session) {
+    // User is already logged in, redirect to dashboard
+    redirect("/dashboard");
+  }
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -11,7 +20,7 @@ export default function LoginPage() {
             <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
               <GalleryVerticalEnd className="size-4" />
             </div>
-            Acme Inc.
+            PharmaLink.
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">
@@ -28,5 +37,5 @@ export default function LoginPage() {
         />
       </div>
     </div>
-  )
+  );
 }

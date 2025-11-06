@@ -7,19 +7,9 @@ import { redirect } from "next/navigation";
 
 export async function signinAction(prevState: unknown, data: FormData) {
   const email = data.get("email") as string;
-  const phone = data.get("phone") as string;
   const password = data.get("password") as string;
 
-  // Perform signup logic here
-
   try {
-    await auth.api.signInPhoneNumber({
-      body: {
-        phoneNumber: phone,
-        password,
-      },
-    });
-
     await auth.api.signInEmail({
       body: {
         email,
@@ -34,9 +24,7 @@ export async function signinAction(prevState: unknown, data: FormData) {
   } catch (error) {
     if (error instanceof APIError) {
       return {
-        name,
         email,
-        phoneNumber: parseInt(phone),
         password,
         errorMessage: error.message,
       };
@@ -44,7 +32,7 @@ export async function signinAction(prevState: unknown, data: FormData) {
     console.log(error);
   }
 
-  //   redirect("/");
+  redirect("/dashboard");
 }
 
 export default signinAction;
