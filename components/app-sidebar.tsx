@@ -64,18 +64,22 @@ const data = {
       items: [
         {
           title: "Anlatics",
-          url: "#",
+          url: "admin/product",
         },
         {
           title: "Order managment",
-          url: "#",
+          url: "admin/product",
         },
         {
           title: "Customers",
-          url: "#",
+          url: "admin/product",
         },
         {
-          title: "Transacction",
+          title: "Transaction",
+          url: "admin/product",
+        },
+        {
+          title: "Supplier",
           url: "#",
         },
         {
@@ -137,7 +141,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroupLabel className="px-4">Product</SidebarGroupLabel>
 
         {items.map((item) => (
-          <SidebarMenuItem key={item.title} className="px-1">
+          <SidebarMenuItem key={item.title} className="px-2">
             <SidebarMenuButton asChild>
               <a href={item.url}>
                 <item.icon />
