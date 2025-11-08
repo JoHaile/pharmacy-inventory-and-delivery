@@ -9,7 +9,7 @@ export default async function LoginPage() {
 
   if (session) {
     // User is already logged in, redirect to dashboard
-    redirect("/dashboard");
+    redirect("/");
   }
 
   return (

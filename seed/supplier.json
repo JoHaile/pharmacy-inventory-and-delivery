@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Abeba Pharma Distribution",
+    "address": "Mexico Square",
+    "city": "Addis Ababa",
+    "daysToDeliver": 1,
+    "phoneNumber": 911001122,
+    "licenseNo": "LIC-ADD-0001"
+  },
+  {
+    "name": "EthioMeds Supply",
+    "address": "Piazza",
+    "city": "Addis Ababa",
+    "daysToDeliver": 2,
+    "phoneNumber": 911003344,
+    "licenseNo": "LIC-ADD-0002"
+  },
+  {
+    "name": "Oromia Health Trading",
+    "address": "Finfinne Plaza",
+    "city": "Adama",
+    "daysToDeliver": 2,
+    "phoneNumber": 912556677,
+    "licenseNo": "LIC-ADA-0001"
+  },
+  {
+    "name": "Gondar Medical Wholesalers",
+    "address": "Azezo Industrial",
+    "city": "Gondar",
+    "daysToDeliver": 3,
+    "phoneNumber": 913778899,
+    "licenseNo": "LIC-GON-0501"
+  },
+  {
+    "name": "Hawassa Pharma Traders",
+    "address": "Dume Branch",
+    "city": "Hawassa",
+    "daysToDeliver": 3,
+    "phoneNumber": 914223344,
+    "licenseNo": "LIC-HAW-0202"
+  },
+  {
+    "name": "Dire Med Supply",
+    "address": "Kezira Area",
+    "city": "Dire Dawa",
+    "daysToDeliver": 4,
+    "phoneNumber": 915667788,
+    "licenseNo": "LIC-DIR-0333"
+  },
+  {
+    "name": "Bahir Med Center",
+    "address": "Kebele 03",
+    "city": "Bahir Dar",
+    "daysToDeliver": 3,
+    "phoneNumber": 916889900,
+    "licenseNo": "LIC-BAH-0101"
+  },
+  {
+    "name": "Tigray Pharma Logistics",
+    "address": "Mezabr Area",
+    "city": "Mekelle",
+    "daysToDeliver": 4,
+    "phoneNumber": 917334455,
+    "licenseNo": "LIC-MEK-0077"
+  },
+  {
+    "name": "Shashemene Drug Import & Supply",
+    "address": "Bus Station Road",
+    "city": "Shashemene",
+    "daysToDeliver": 2,
+    "phoneNumber": 918990012,
+    "licenseNo": "LIC-SHA-0399"
+  },
+  {
+    "name": "Harar Medical Group",
+    "address": "Old Town Center",
+    "city": "Harar",
+    "daysToDeliver": 4,
+    "phoneNumber": 919112233,
+    "licenseNo": "LIC-HAR-0440"
+  }
+]

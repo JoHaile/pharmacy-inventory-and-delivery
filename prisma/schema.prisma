@@ -16,7 +16,6 @@ datasource db {
 
 enum Role {
   PHARMACY
-  CUSTOMER
   SUPPLIER
   DRIVER
   MANAGER
@@ -29,7 +28,7 @@ model User {
   phoneNumber   Int       @unique
   emailVerified Boolean   @default(false)
   image         String?
-  role          Role      @default(CUSTOMER)
+  role          Role      @default(PHARMACY)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
@@ -86,7 +85,7 @@ model Verification {
 }
 
 model Pharmacy {
-  id          String   @id
+  id          String   @id @default(uuid())
   name        String
   address     String
   city        String
@@ -102,15 +101,16 @@ model Pharmacy {
 }
 
 model Supplier {
-  id          String     @id
-  name        String
-  address     String
-  city        String
-  phoneNumber Int        @unique
-  licenseNo   String?    @unique
-  pharmacy    Pharmacy[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @default(now()) @updatedAt
+  id            String     @id @default(uuid())
+  name          String
+  address       String
+  city          String
+  daysToDeliver Int
+  phoneNumber   Int        @unique
+  licenseNo     String?    @unique
+  pharmacy      Pharmacy[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now()) @updatedAt
 
   @@map("supplier")
 }
