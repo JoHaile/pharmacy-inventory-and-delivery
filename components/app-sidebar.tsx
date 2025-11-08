@@ -71,7 +71,7 @@ const data = {
         },
         {
           title: "Order managment",
-          url: "admin/product",
+          url: "admin/products",
         },
         {
           title: "Customers",
@@ -165,12 +165,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 const items = [
   {
     title: "Add Product",
-    url: "/admin/product/new",
+    url: "/admin/products/new",
     icon: CirclePlus,
   },
   {
     title: "Product List",
-    url: "/admin/product",
+    url: "/admin/products",
     icon: ClipboardList,
   },
   {

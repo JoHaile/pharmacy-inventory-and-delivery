@@ -4,20 +4,35 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useActionState, useState } from "react";
-import { addProduct } from "../../_actions/products";
+import { addProduct, updateProduct } from "../../_actions/products";
 import { useFormStatus } from "react-dom";
+import { Product } from "@/lib/generated/prisma";
+import Image from "next/image";
 
-const ProductForm = () => {
-  const [error, action] = useActionState(addProduct, undefined);
+const ProductForm = ({ product }: { product?: Product | null }) => {
+  const [error, action] = useActionState(
+    product == null ? addProduct : updateProduct.bind(null, product.id),
+    {}
+  );
 
-  const [priceInCents, setPriceInCents] = useState<number | undefined>();
+  const [priceInCents, setPriceInCents] = useState<number | undefined>(
+    product?.priceInCents
+  );
   return (
     <>
-      <form action={action} className="space-y-6 w-[90%] max-w-[700px] m-auto">
+      <form
+        action={action}
+        className="space-y-6 w-[90%] max-w-[700px] m-auto mb-2"
+      >
         <Input name="pharmacyId" defaultValue={"12345"} />
         <div className="space-y-4">
           <Label htmlFor="name">Name</Label>
-          <Input type="text" name="name" required />
+          <Input
+            type="text"
+            name="name"
+            required
+            defaultValue={product?.name || ""}
+          />
           {error?.name && <div className="text-destructive">{error.name}</div>}
         </div>
         <div className="space-y-4">
@@ -39,7 +54,12 @@ const ProductForm = () => {
         </div>
         <div className="space-y-4">
           <Label>Quantity</Label>
-          <Input type="number" name="quantity" required />
+          <Input
+            type="number"
+            name="quantity"
+            defaultValue={product?.quantity}
+            required
+          />
           {error?.quantity && (
             <div className="text-destructive">{error.quantity}</div>
           )}
@@ -49,6 +69,7 @@ const ProductForm = () => {
           <Textarea
             name="description"
             placeholder="add here the product description"
+            defaultValue={product?.description || ""}
           />
           {error?.description && (
             <div className="text-destructive">{error.description}</div>
@@ -56,7 +77,15 @@ const ProductForm = () => {
         </div>
         <div className="space-y-4">
           <Label>Image</Label>
-          <Input type="file" name="image" required />
+          <Input type="file" name="image" required={product == null} />
+          {product != null && (
+            <Image
+              src={product.imagePath}
+              width="400"
+              height="400"
+              alt="product Image"
+            />
+          )}
           {error?.image && (
             <div className="text-destructive">{error.image}</div>
           )}
@@ -72,7 +101,7 @@ export default ProductForm;
 export function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" disabled={pending}>
+    <Button type="submit" disabled={pending} className="px-5">
       {pending ? "Saving" : "Save"}
     </Button>
   );

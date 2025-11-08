@@ -26,7 +26,7 @@ const page = () => {
       <div className="flex justify-between">
         <div className="text-4xl mb-4">Product List</div>
         <Button asChild>
-          <Link href="/admin/product/new">Add Products</Link>
+          <Link href="/admin/products/new">Add Products</Link>
         </Button>
       </div>
       <ProductsTable />

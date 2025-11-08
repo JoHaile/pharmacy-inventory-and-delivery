@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 import z from "zod";
 import fs from "fs/promises";
+import { notFound, redirect } from "next/navigation";
 
 const fileSchema = z.instanceof(File, { message: "Required" });
 const imageSchema = fileSchema.refine(
@@ -19,8 +20,6 @@ const addSchema = z.object({
 });
 
 export async function addProduct(prevState: unknown, formData: FormData) {
-  console.log("helllo");
-
   const result = addSchema.safeParse(Object.fromEntries(formData.entries()));
   if (result.success === false) {
     console.log(result.error.flatten().fieldErrors);
@@ -48,6 +47,8 @@ export async function addProduct(prevState: unknown, formData: FormData) {
       pharmacyId: data.pharmacyId as string,
     },
   });
+
+  redirect("/admin/product");
 }
 
 export async function toggleProductAvailablity(
@@ -60,6 +61,56 @@ export async function toggleProductAvailablity(
     },
     data: {
       isAvailableForPurchase,
+    },
+  });
+}
+
+const editSchema = addSchema.extend({
+  image: imageSchema.optional(),
+});
+
+export async function updateProduct(
+  id: string,
+  prevState: unknown,
+  formData: FormData
+) {
+  const result = editSchema.safeParse(Object.fromEntries(formData.entries()));
+
+  if (result.success === false) {
+    return result.error.flatten().fieldErrors;
+  }
+
+  const data = result.data;
+
+  const product = await prisma.product.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!product) notFound();
+
+  let imagePath = product.imagePath;
+
+  if (data.image != null && data.image?.size > 0) {
+    await fs.unlink(`public${product.imagePath}`);
+    imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`;
+    await fs.writeFile(
+      `public${imagePath}`,
+      Buffer.from(await data.image.arrayBuffer())
+    );
+  }
+
+  await prisma.product.update({
+    where: {
+      id,
+    },
+    data: {
+      name: data.name,
+      description: data.description,
+      priceInCents: data.priceInCents,
+      imagePath: imagePath,
+      quantity: data.quantity,
     },
   });
 }
