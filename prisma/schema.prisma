@@ -86,7 +86,7 @@ model Verification {
 }
 
 model Pharmacy {
-  id          String   @id
+  id          String   @id @default(uuid())
   name        String
   address     String
   city        String
@@ -102,7 +102,7 @@ model Pharmacy {
 }
 
 model Supplier {
-  id          String     @id
+  id          String     @id @default(uuid())
   name        String
   address     String
   city        String
@@ -116,7 +116,7 @@ model Supplier {
 }
 
 model Product {
-  id                     String   @id
+  id                     String   @id @default(uuid())
   name                   String
   description            String?
   price                  Float
