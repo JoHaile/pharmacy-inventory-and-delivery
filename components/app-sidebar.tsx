@@ -8,6 +8,7 @@ import {
   Command,
   Frame,
   GalleryVerticalEnd,
+  icons,
   Map,
   PieChart,
   Settings2,
@@ -59,12 +60,12 @@ const data = {
     {
       title: "Dashboard",
       url: "#",
-      icon: SquareTerminal,
+      icon: PieChart,
       isActive: true,
       items: [
         {
           title: "Anlatics",
-          url: "admin/product",
+          url: "/admin",
         },
         {
           title: "Order managment",
@@ -72,19 +73,19 @@ const data = {
         },
         {
           title: "Customers",
-          url: "admin/product",
+          url: "/admin",
         },
         {
           title: "Transaction",
-          url: "admin/product",
+          url: "/admin",
         },
         {
           title: "Supplier",
-          url: "#",
+          url: "/admin",
         },
         {
           title: "Categories",
-          url: "#",
+          url: "/admin",
         },
         {
           title: "Driver",
@@ -161,13 +162,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 const items = [
   {
-    title: "Product",
-    url: "#",
+    title: "Add Product",
+    url: "/admin/product/new",
     icon: Home,
   },
   {
     title: "Product List",
-    url: "#",
+    url: "/admin/product",
     icon: Inbox,
   },
   {

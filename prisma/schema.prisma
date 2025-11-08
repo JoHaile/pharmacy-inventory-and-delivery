@@ -119,7 +119,7 @@ model Product {
   id                     String   @id
   name                   String
   description            String?
-  price                  Float
+  priceInCents           Float
   quantity               Int
   imagePath              String
   isAvailableForPurchase Boolean  @default(true)
