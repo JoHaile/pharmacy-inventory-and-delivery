@@ -1,16 +1,24 @@
 import { Button } from "@/components/ui/button";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   Table,
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import prisma from "@/lib/prisma";
+import { MoreVertical } from "lucide-react";
 import Link from "next/link";
+import { ActvieToggleDropdownItem } from "./_componets/ProductAction";
 
 const page = () => {
   return (
@@ -80,6 +88,36 @@ export async function ProductsTable() {
               </TableCell>
               <TableCell className="">
                 {product.createdAt.toLocaleDateString()}
+              </TableCell>
+              <TableCell>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <MoreVertical></MoreVertical>
+                    <span className="sr-only">Actions</span>
+                  </DropdownMenuTrigger>
+
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <a href="/">Download</a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href={`/admin/products/${product.id}/edit`}>
+                        Edit
+                      </Link>
+                    </DropdownMenuItem>
+                    <ActvieToggleDropdownItem
+                      id={product.id}
+                      isAvailableForPurchase={product.isAvailableForPurchase}
+                    />
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      variant="destructive"
+                      className="text-destructive"
+                    >
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </TableCell>
             </TableRow>
           ))}

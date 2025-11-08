@@ -49,3 +49,17 @@ export async function addProduct(prevState: unknown, formData: FormData) {
     },
   });
 }
+
+export async function toggleProductAvailablity(
+  id: string,
+  isAvailableForPurchase: boolean
+) {
+  await prisma.product.update({
+    where: {
+      id,
+    },
+    data: {
+      isAvailableForPurchase,
+    },
+  });
+}
