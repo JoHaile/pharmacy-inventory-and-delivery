@@ -101,15 +101,16 @@ model Pharmacy {
 }
 
 model Supplier {
-  id          String     @id @default(uuid())
-  name        String
-  address     String
-  city        String
-  phoneNumber Int        @unique
-  licenseNo   String?    @unique
-  pharmacy    Pharmacy[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @default(now()) @updatedAt
+  id            String     @id @default(uuid())
+  name          String
+  address       String
+  city          String
+  daysToDeliver Int
+  phoneNumber   Int        @unique
+  licenseNo     String?    @unique
+  pharmacy      Pharmacy[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now()) @updatedAt
 
   @@map("supplier")
 }

@@ -1,16 +1,11 @@
 import prisma from "@/lib/prisma";
+import data from "./supplier.json";
 
 export async function main() {
-  const supplier = await prisma.supplier.create({
-    data: {
-      name: "Abeba Pharma Distribution",
-      address: "Mexico Square",
-      city: "Addis Ababa",
-      phoneNumber: 911223344,
-      licenseNo: "LIC-2025-001",
-    },
+  const supplier = await prisma.supplier.createMany({
+    data: data,
+    skipDuplicates: true,
   });
-
   console.log("✅ Supplier Seeded:", supplier);
 }
 
