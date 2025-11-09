@@ -6,25 +6,32 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function signinAction(prevState: unknown, data: FormData) {
-  const email = data.get("email") as string;
+  const phone = data.get("phone") as string;
   const password = data.get("password") as string;
+  const email = phone + "@gmail.com";
 
   try {
-    await auth.api.signInEmail({
+    // await auth.api.signInEmail({
+    //   body: {
+    //     email,
+    //     password,
+    //   },
+    //   headers: await headers(),
+    // });
+    await auth.api.signInPhoneNumber({
       body: {
-        email,
+        phoneNumber: phone,
         password,
       },
-      headers: await headers(),
     });
 
     return {
-      errorMessage: "successful",
+      successMessage: "successful",
     };
   } catch (error) {
     if (error instanceof APIError) {
       return {
-        email,
+        phone,
         password,
         errorMessage: error.message,
       };

@@ -20,7 +20,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"form">) {
   const initialState = {
-    email: "",
+    phone: "",
     password: "",
     errorMessage: "",
   };
@@ -32,6 +32,7 @@ export function LoginForm({
 
   useEffect(() => {
     state?.errorMessage && toast.error(state.errorMessage);
+    state?.successMessage && toast.success(state.successMessage);
   }, [state]);
 
   return (
@@ -48,8 +49,14 @@ export function LoginForm({
           </p>
         </div>
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <FieldLabel htmlFor="phone">Phone Number</FieldLabel>
+          <Input
+            id="phone"
+            type="tel"
+            placeholder="+1234567890"
+            required
+            name="phone"
+          />
         </Field>
         <Field>
           <div className="flex items-center">
@@ -64,7 +71,9 @@ export function LoginForm({
           <Input id="password" type="password" required />
         </Field>
         <Field>
-          <Button type="submit">Login</Button>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Logging..." : "Login"}
+          </Button>
         </Field>
         <Field>
           <FieldDescription className="text-center">
