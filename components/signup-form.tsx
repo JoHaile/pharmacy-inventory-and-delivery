@@ -20,7 +20,6 @@ export function SignupForm({
 }: React.ComponentProps<"form">) {
   const initialState = {
     name: "",
-    email: "",
     password: "",
     errorMessage: "",
     phoneNumber: NaN,
@@ -32,6 +31,7 @@ export function SignupForm({
 
   useEffect(() => {
     state?.errorMessage && toast.error(state.errorMessage);
+    state?.successMessage && toast.success(state.successMessage);
   }, [state]);
 
   return (
@@ -56,20 +56,6 @@ export function SignupForm({
             placeholder="John Doe"
             required
           />
-        </Field>
-        <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="m@example.com"
-            required
-          />
-          <FieldDescription>
-            We&apos;ll use this to contact you. We will not share your email
-            with anyone else.
-          </FieldDescription>
         </Field>
         <Field>
           <FieldLabel htmlFor="phone">Phone Number</FieldLabel>
