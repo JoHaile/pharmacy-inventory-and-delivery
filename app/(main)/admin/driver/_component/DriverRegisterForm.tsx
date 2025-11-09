@@ -39,7 +39,9 @@ function DriverRegisterForm() {
           type="number"
           className="mb-8 mt-5"
         />
-        <Button>Create Driver</Button>
+        <Button disabled={isPending}>
+          {isPending ? "loading..." : "Create Driver"}
+        </Button>
       </form>
     </div>
   );
