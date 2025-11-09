@@ -84,7 +84,7 @@ const data = {
         },
         {
           title: "Driver",
-          url: "#",
+          url: "/admin/driver",
         },
       ],
     },

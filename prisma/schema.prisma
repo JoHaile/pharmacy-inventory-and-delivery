@@ -15,6 +15,7 @@ datasource db {
 }
 
 enum Role {
+  CUSTOMER
   PHARMACY
   SUPPLIER
   DRIVER
@@ -22,18 +23,21 @@ enum Role {
 }
 
 model User {
-  id            String    @id
+  id            String    @id @default(uuid())
   name          String
   email         String
   phoneNumber   Int       @unique
   emailVerified Boolean   @default(false)
   image         String?
-  role          Role      @default(PHARMACY)
+  role          Role      @default(CUSTOMER)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
   orders        Order[]
+
+  pharmacy   Pharmacy? @relation(fields: [pharmacyId], references: [id])
+  pharmacyId String?
 
   @@unique([email])
   @@map("user")
@@ -91,28 +95,44 @@ model Pharmacy {
   city        String
   phoneNumber Int      @unique
   licenseNo   String?  @unique
+  approved    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 
   products  Product[]
   suppliers Supplier[]
+  users     User[]
 
   @@map("pharmacy")
 }
 
 model Supplier {
-  id            String     @id @default(uuid())
+  id            String  @id @default(uuid())
   name          String
   address       String
   city          String
   daysToDeliver Int
-  phoneNumber   Int        @unique
-  licenseNo     String?    @unique
-  pharmacy      Pharmacy[]
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @default(now()) @updatedAt
+  phoneNumber   Int     @unique
+  licenseNo     String? @unique
+
+  pharmacy         Pharmacy[]
+  supplierProducts SupplierProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@map("supplier")
+}
+
+model SupplierProduct {
+  id                     String  @id @default(uuid())
+  name                   String
+  unitCost               Float
+  imagePath              String
+  isAvailableForPurchase Boolean @default(true)
+
+  supplier   Supplier @relation(fields: [supplierId], references: [id])
+  supplierId String
 }
 
 model Product {
