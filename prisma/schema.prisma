@@ -26,7 +26,6 @@ model User {
   id            String    @id @default(uuid())
   name          String
   email         String
-  phoneNumber   Int       @unique
   emailVerified Boolean   @default(false)
   image         String?
   role          Role      @default(CUSTOMER)
@@ -39,8 +38,12 @@ model User {
   pharmacy   Pharmacy? @relation(fields: [pharmacyId], references: [id])
   pharmacyId String?
 
+  phoneNumber         Int?
+  phoneNumberVerified Boolean?
+
   @@unique([email])
   @@map("user")
+  @@unique([phoneNumber])
 }
 
 model Session {
