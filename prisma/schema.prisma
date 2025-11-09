@@ -139,7 +139,7 @@ model Product {
   id                     String   @id @default(uuid())
   name                   String
   description            String?
-  price                  Float
+  priceInCents           Float
   quantity               Int
   imagePath              String
   isAvailableForPurchase Boolean  @default(true)
