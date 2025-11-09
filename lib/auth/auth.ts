@@ -27,7 +27,21 @@ export const auth = betterAuth({
       // phoneNumber:{}
     },
   },
-  plugins: [phoneNumber(), nextCookies()],
+  plugins: [
+    phoneNumber({
+      sendOTP(data, request) {},
+      signUpOnVerification: {
+        getTempEmail: (phoneNumber) => {
+          return `temp-${phoneNumber}@example.com`;
+        },
+        getTempName: (phoneNumber) => {
+          return `User-${phoneNumber}`;
+        },
+      },
+      requireVerification: false,
+    }),
+    nextCookies(),
+  ],
 });
 
 export type Session = typeof auth.$Infer.Session.session;
