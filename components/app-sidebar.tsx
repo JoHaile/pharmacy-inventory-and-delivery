@@ -70,8 +70,8 @@ const data = {
           url: "/admin",
         },
         {
-          title: "Order managment",
-          url: "admin/products",
+          title: "Order management",
+          url: "/admin/products",
         },
         {
           title: "Customers",
@@ -82,16 +82,16 @@ const data = {
           url: "/admin",
         },
         {
-          title: "Supplier",
-          url: "/admin/supplier",
-        },
-        {
           title: "Categories",
           url: "/admin",
         },
         {
+          title: "Supplier",
+          url: "/admin/supplier",
+        },
+        {
           title: "Driver",
-          url: "#",
+          url: "/admin/driver",
         },
       ],
     },

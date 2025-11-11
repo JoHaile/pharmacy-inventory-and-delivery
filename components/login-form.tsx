@@ -20,8 +20,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"form">) {
   const initialState = {
-    email: "",
-    password: "",
+    phone: "",
     errorMessage: "",
   };
 
@@ -32,6 +31,7 @@ export function LoginForm({
 
   useEffect(() => {
     state?.errorMessage && toast.error(state.errorMessage);
+    state?.successMessage && toast.success(state.successMessage);
   }, [state]);
 
   return (
@@ -48,23 +48,38 @@ export function LoginForm({
           </p>
         </div>
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <FieldLabel htmlFor="phone">Phone Number</FieldLabel>
+          <Input
+            id="phone"
+            type="text"
+            placeholder="+1234567890"
+            // defaultValue={state?.phone || ""}
+            required
+            name="phone"
+          />
         </Field>
         <Field>
-          <div className="flex items-center">
-            <FieldLabel htmlFor="password">Password</FieldLabel>
-            <a
+          <FieldLabel htmlFor="password">Password</FieldLabel>
+          {/* <div className="flex items-center"> */}
+          {/* <a
               href="#"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
               Forgot your password?
             </a>
-          </div>
-          <Input id="password" type="password" required />
+          </div> */}
+          <Input
+            id="password"
+            // type="text"
+            placeholder="password"
+            required
+            name="password"
+          />
         </Field>
         <Field>
-          <Button type="submit">Login</Button>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Logging..." : "Login"}
+          </Button>
         </Field>
         <Field>
           <FieldDescription className="text-center">

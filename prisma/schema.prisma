@@ -38,12 +38,12 @@ model User {
   pharmacy   Pharmacy? @relation(fields: [pharmacyId], references: [id])
   pharmacyId String?
 
-  phoneNumber         Int?
+  phoneNumber         String?
   phoneNumberVerified Boolean?
 
   @@unique([email])
-  @@map("user")
   @@unique([phoneNumber])
+  @@map("user")
 }
 
 model Session {
@@ -102,9 +102,8 @@ model Pharmacy {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 
-  products  Product[]
-  suppliers Supplier[]
-  users     User[]
+  products Product[]
+  users    User[]
 
   @@map("pharmacy")
 }
@@ -118,7 +117,6 @@ model Supplier {
   phoneNumber   Int     @unique
   licenseNo     String? @unique
 
-  pharmacy         Pharmacy[]
   supplierProducts SupplierProduct[]
 
   createdAt DateTime @default(now())

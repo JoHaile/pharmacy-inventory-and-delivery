@@ -3,13 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { addProduct, updateProduct } from "../../_actions/products";
 import { useFormStatus } from "react-dom";
 import { Product } from "@/lib/generated/prisma";
 import Image from "next/image";
+import { authClient } from "@/lib/auth/auth-client";
+import { redirect } from "next/navigation";
 
 const ProductForm = ({ product }: { product?: Product | null }) => {
+  const [pharmacyId, setPharmacyId] = useState<string | undefined>();
   const [error, action] = useActionState(
     product == null ? addProduct : updateProduct.bind(null, product.id),
     {}
@@ -18,13 +21,28 @@ const ProductForm = ({ product }: { product?: Product | null }) => {
   const [priceInCents, setPriceInCents] = useState<number | undefined>(
     product?.priceInCents
   );
+
+  useEffect(() => {
+    async function fetchSession() {
+      const { data, error } = await authClient.getSession();
+
+      if (data) {
+        setPharmacyId(data.user.pharmacyId);
+      } else {
+        redirect("/login");
+      }
+    }
+
+    fetchSession();
+  }, []);
+
   return (
     <>
       <form
         action={action}
         className="space-y-6 w-[90%] max-w-[700px] m-auto mb-2"
       >
-        <Input name="pharmacyId" defaultValue={"12345"} />
+        <Input name="pharmacyId" hidden defaultValue={pharmacyId} />
         <div className="space-y-4">
           <Label htmlFor="name">Name</Label>
           <Input
