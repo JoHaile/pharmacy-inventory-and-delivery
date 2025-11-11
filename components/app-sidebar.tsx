@@ -5,9 +5,12 @@ import {
   AudioWaveform,
   BookOpen,
   Bot,
+  CirclePlus,
+  ClipboardList,
   Command,
   Frame,
   GalleryVerticalEnd,
+  icons,
   Map,
   PieChart,
   Settings2,
@@ -59,32 +62,36 @@ const data = {
     {
       title: "Dashboard",
       url: "#",
-      icon: SquareTerminal,
+      icon: PieChart,
       isActive: true,
       items: [
         {
-          title: "Anlatics",
-          url: "#",
+          title: "Analytics",
+          url: "/admin",
         },
         {
           title: "Order managment",
-          url: "#",
+          url: "admin/products",
         },
         {
           title: "Customers",
-          url: "#",
+          url: "/admin",
         },
         {
-          title: "Transacction",
-          url: "#",
+          title: "Transaction",
+          url: "/admin",
+        },
+        {
+          title: "Supplier",
+          url: "/admin/supplier",
         },
         {
           title: "Categories",
-          url: "#",
+          url: "/admin",
         },
         {
           title: "Driver",
-          url: "/admin/driver",
+          url: "#",
         },
       ],
     },
@@ -137,14 +144,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroupLabel className="px-4">Product</SidebarGroupLabel>
 
         {items.map((item) => (
-          <div key={item.title} className="px-1">
+          <SidebarMenuItem key={item.title} className="px-2">
             <SidebarMenuButton asChild>
-              <Link href={item.url}>
+              <a href={item.url}>
                 <item.icon />
                 {item.title}
-              </Link>
+              </a>
             </SidebarMenuButton>
-          </div>
+          </SidebarMenuItem>
         ))}
       </SidebarContent>
       <SidebarFooter>
@@ -157,19 +164,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 const items = [
   {
-    title: "Product",
-    url: "#",
-    icon: Home,
+    title: "Add Product",
+    url: "/admin/products/new",
+    icon: CirclePlus,
   },
   {
     title: "Product List",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Supplier",
-    url: "/admin/supplier",
-    icon: Inbox,
+    url: "/admin/products",
+    icon: ClipboardList,
   },
   {
     title: "Settings",
