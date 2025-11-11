@@ -21,7 +21,6 @@ export function LoginForm({
 }: React.ComponentProps<"form">) {
   const initialState = {
     phone: "",
-    password: "",
     errorMessage: "",
   };
 
@@ -52,23 +51,30 @@ export function LoginForm({
           <FieldLabel htmlFor="phone">Phone Number</FieldLabel>
           <Input
             id="phone"
-            type="tel"
+            type="text"
             placeholder="+1234567890"
+            // defaultValue={state?.phone || ""}
             required
             name="phone"
           />
         </Field>
         <Field>
-          <div className="flex items-center">
-            <FieldLabel htmlFor="password">Password</FieldLabel>
-            <a
+          <FieldLabel htmlFor="password">Password</FieldLabel>
+          {/* <div className="flex items-center"> */}
+          {/* <a
               href="#"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
               Forgot your password?
             </a>
-          </div>
-          <Input id="password" type="password" required />
+          </div> */}
+          <Input
+            id="password"
+            // type="text"
+            placeholder="password"
+            required
+            name="password"
+          />
         </Field>
         <Field>
           <Button type="submit" disabled={isPending}>

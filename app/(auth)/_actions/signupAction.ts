@@ -16,17 +16,19 @@ export async function signupAction(prevState: unknown, data: FormData) {
     await auth.api.signUpEmail({
       body: {
         name,
-        email: `${phone}@example.com`,
-        phoneNumber: parseInt(phone),
+        email: `${phone}@gmail.com`,
+        phoneNumber: phone,
         password,
       },
       headers: await headers(),
     });
 
     return {
-      successMessage: "successful",
+      successMessage: "signup successful!",
     };
   } catch (error) {
+    console.log(error);
+
     if (error instanceof APIError) {
       return {
         name,
@@ -35,10 +37,7 @@ export async function signupAction(prevState: unknown, data: FormData) {
         errorMessage: error.message,
       };
     }
-    console.log(error);
   }
-
-  redirect("/");
 }
 
 export default signupAction;

@@ -3,43 +3,33 @@
 import { auth } from "@/lib/auth/auth";
 import { APIError } from "better-auth";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
-export async function signinAction(prevState: unknown, data: FormData) {
-  const phone = data.get("phone") as string;
-  const password = data.get("password") as string;
-  const email = phone + "@gmail.com";
+export async function signinAction(prevState: unknown, FormData: FormData) {
+  const password = FormData.get("password") as string;
+  const phone = FormData.get("phone") as string;
 
   try {
-    // await auth.api.signInEmail({
-    //   body: {
-    //     email,
-    //     password,
-    //   },
-    //   headers: await headers(),
-    // });
-    await auth.api.signInPhoneNumber({
+    await auth.api.signInEmail({
       body: {
-        phoneNumber: phone,
+        email: `${phone}@gmail.com`,
         password,
       },
+      headers: await headers(),
     });
 
     return {
-      successMessage: "successful",
+      successMessage: "signin successful",
     };
   } catch (error) {
+    console.log(error);
+
     if (error instanceof APIError) {
       return {
         phone,
-        password,
         errorMessage: error.message,
       };
     }
-    console.log(error);
   }
-
-  redirect("/dashboard");
 }
 
 export default signinAction;

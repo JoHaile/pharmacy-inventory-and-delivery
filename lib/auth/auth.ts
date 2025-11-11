@@ -1,8 +1,8 @@
-import { betterAuth } from "better-auth";
+import { APIError, betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "../prisma";
 import { nextCookies } from "better-auth/next-js";
-import { phoneNumber } from "better-auth/plugins";
+import { createAuthMiddleware, phoneNumber } from "better-auth/plugins";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -11,11 +11,13 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: false,
+    autoSignIn: true,
   },
 
   user: {
     additionalFields: {
-      phoneNumber: { type: "number", unique: true, input: true },
+      phoneNumber: { type: "string", unique: true, input: true },
       role: {
         type: "string[]",
         enumValues: ["CUSTOMER", "SUPPLIER", "DRIVER", "MANAGER"],
