@@ -20,10 +20,11 @@ export const auth = betterAuth({
       phoneNumber: { type: "string", unique: true, input: true },
       role: {
         type: "string[]",
-        enumValues: ["CUSTOMER", "SUPPLIER", "DRIVER", "MANAGER"],
+        enumValues: ["CUSTOMER", "SUPPLIER", "DRIVER", "MANAGER", "PHARMACY"],
         default: "CUSTOMER",
         input: false,
       },
+      pharmacyId: { type: "string", input: false },
     },
     fields: {
       // phoneNumber:{}

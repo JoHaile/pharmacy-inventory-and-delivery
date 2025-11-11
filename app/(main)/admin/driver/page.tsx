@@ -30,6 +30,7 @@ async function page() {
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Phone Number</TableHead>
+            <TableHead>Role</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -38,6 +39,7 @@ async function page() {
               <TableCell>{driver.name}</TableCell>
               <TableCell>{driver.email}</TableCell>
               <TableCell>{driver.phoneNumber}</TableCell>
+              <TableCell>{driver.role}</TableCell>
             </TableRow>
           ))}
         </TableBody>
