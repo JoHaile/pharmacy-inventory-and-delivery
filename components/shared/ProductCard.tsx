@@ -11,7 +11,6 @@ import {
 import Image from "next/image";
 import { Heart, Star } from "lucide-react";
 import { Button } from "../ui/button";
-import { Toggle } from "@/components/ui/toggle";
 
 function ProductCard() {
   return (

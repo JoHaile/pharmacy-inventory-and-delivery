@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
@@ -14,42 +8,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  CUSTOMER
-  PHARMACY
-  SUPPLIER
-  DRIVER
-  MANAGER
-}
-
 model User {
   id            String    @id @default(uuid())
   name          String
-  email         String
+  email         String    @unique
+  phoneNumber   Int       @unique
   emailVerified Boolean   @default(false)
   image         String?
   role          Role      @default(CUSTOMER)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
-  sessions      Session[]
-  accounts      Account[]
   orders        Order[]
+  accounts      Account[]
+  sessions      Session[]
 
-  pharmacy   Pharmacy? @relation(fields: [pharmacyId], references: [id])
-  pharmacyId String?
-
-  phoneNumber         String?
-  phoneNumberVerified Boolean?
-
-  @@unique([email])
-  @@unique([phoneNumber])
   @@map("user")
 }
 
 model Session {
   id        String   @id
   expiresAt DateTime
-  token     String
+  token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ipAddress String?
@@ -57,7 +36,6 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
   @@map("session")
 }
 
@@ -66,7 +44,6 @@ model Account {
   accountId             String
   providerId            String
   userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
   idToken               String?
@@ -76,6 +53,7 @@ model Account {
   password              String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("account")
 }
@@ -92,63 +70,47 @@ model Verification {
 }
 
 model Pharmacy {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   name        String
   address     String
   city        String
-  phoneNumber Int      @unique
-  licenseNo   String?  @unique
-  approved    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
-
-  products Product[]
-  users    User[]
+  phoneNumber Int        @unique
+  licenseNo   String?    @unique
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now()) @updatedAt
+  products    Product[]
+  supplier    Supplier[] @relation("PharmacyToSupplier")
 
   @@map("pharmacy")
 }
 
 model Supplier {
-  id            String  @id @default(uuid())
-  name          String
-  address       String
-  city          String
-  daysToDeliver Int
-  phoneNumber   Int     @unique
-  licenseNo     String? @unique
-
-  supplierProducts SupplierProduct[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id          String     @id @default(uuid())
+  name        String
+  address     String
+  city        String
+  phoneNumber Int        @unique
+  licenseNo   String?    @unique
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now()) @updatedAt
+  pharmacy    Pharmacy[] @relation("PharmacyToSupplier")
 
   @@map("supplier")
-}
-
-model SupplierProduct {
-  id                     String  @id @default(uuid())
-  name                   String
-  unitCost               Float
-  imagePath              String
-  isAvailableForPurchase Boolean @default(true)
-
-  supplier   Supplier @relation(fields: [supplierId], references: [id])
-  supplierId String
 }
 
 model Product {
   id                     String   @id @default(uuid())
   name                   String
   description            String?
-  priceInCents           Float
   quantity               Int
   imagePath              String
   isAvailableForPurchase Boolean  @default(true)
-  pharmacy               Pharmacy @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
   pharmacyId             String
   createdAt              DateTime @default(now())
   updatedAt              DateTime @default(now()) @updatedAt
+  priceInCents           Float
   orders                 Order[]
+  pharmacy               Pharmacy @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
 
   @@map("product")
 }
@@ -158,10 +120,16 @@ model Order {
   pricePaidInCents Int
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+  userId           String
+  productId        String
+  product          Product  @relation(fields: [productId], references: [id])
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
-  userId    String
-  productId String
-
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+enum Role {
+  PHARMACY
+  CUSTOMER
+  SUPPLIER
+  DRIVER
+  MANAGER
 }

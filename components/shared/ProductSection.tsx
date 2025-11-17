@@ -2,19 +2,67 @@ import Link from "next/link";
 import React from "react";
 import ProductCard from "./ProductCard";
 import { ArrowRight } from "lucide-react";
+import prisma from "@/lib/prisma";
+import { Product } from "@/lib/generated/prisma";
+
+export const getMostPopularProduct = async () => {
+  const products = await prisma.product.findMany({
+    where: {
+      isAvailableForPurchase: true,
+    },
+    orderBy: {
+      orders: {
+        _count: "desc",
+      },
+    },
+    take: 4,
+  });
+
+  return products;
+};
+
+const getNewestProduct = async () => {
+  const products = await prisma.product.findMany({
+    where: {
+      isAvailableForPurchase: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 6,
+  });
+
+  return products;
+};
 
 function ProductSection() {
   return (
     <div className="space-y-10">
-      <ProductGridSection title={"Most Popular"} />
-      <ProductGridSection title={"Newest Product"} />
+      <ProductGridSection
+        title={"Most Popular"}
+        productFetcher={getMostPopularProduct}
+      />
+      <ProductGridSection
+        title={"Newest Product"}
+        productFetcher={getNewestProduct}
+      />
     </div>
   );
 }
 
 export default ProductSection;
 
-export async function ProductGridSection({ title }: { title: string }) {
+export async function ProductGridSection({
+  title,
+  productFetcher,
+}: {
+  title: string;
+  productFetcher: () => Promise<Product[]>;
+}) {
+  if (productFetcher) {
+    console.log("Product that been fetched: ", await productFetcher());
+    console.log("Product Type: ", typeof productFetcher);
+  }
   return (
     <div className="space-y-10">
       <div className="flex gap-5 items-center text-center">
