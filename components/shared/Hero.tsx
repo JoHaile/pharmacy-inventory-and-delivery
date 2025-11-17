@@ -4,7 +4,7 @@ import Image from "next/image";
 
 function Hero() {
   return (
-    <div className="flex flex-col md:flex-row h-[60vh] gap-x-10 mt-7">
+    <div className="flex items-center flex-col md:flex-row h-[350px] gap-x-10 mt-7">
       <div className="flex-1 space-y-5">
         <h4 className="text-[15px]">Exclusive Discounts</h4>
         <h1 className="text-3xl md:text-5xl">
